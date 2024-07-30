@@ -1,10 +1,6 @@
-import "./globals.css";
-import theme from './theme.js';
-import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
 import { DM_Sans } from 'next/font/google'
 import { Space_Mono } from 'next/font/google'
-
+import "./globals.css";
 
 const fontHeading = DM_Sans({
   subsets: ['latin'],
@@ -20,8 +16,6 @@ const fontBody = Space_Mono({
   variable: '--font-body',
 })
 
-
-
 export const metadata = {
   title: "Pantry Tracker App",
   description: "Track your pantry - better",
@@ -30,14 +24,15 @@ export const metadata = {
 export default function Layout({ children }) {
   return (
     <html lang="en">
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <body
-          className={`antialiased ${fontHeading.variable} ${fontBody.variable}`}
-        >
-          {children}
-        </body>
-      </ThemeProvider>
+      <body 
+        className={cn(
+          'antialiased',
+          fontHeading.variable,
+          fontBody.variable
+        )}
+      >
+        {children}
+      </body>
     </html>
   )
 }

@@ -1,7 +1,7 @@
 import "./globals.css";
 import theme from './theme.js';
 import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
+import { CssBaseline } from '@mui/material/CssBaseline';
 import { DM_Sans } from 'next/font/google'
 import { Space_Mono } from 'next/font/google'
 
