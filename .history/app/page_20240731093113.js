@@ -1,5 +1,5 @@
-// import { PantryManager } from '@/components/sample';
-import { Box, Typography } from '@mui/material';
+import { PantryManager } from '@/components/sample';
+// import { Box, Typography } from '@mui/material';
 
 export default function Home() {
   return (
