@@ -1,8 +1,6 @@
 import { Paper, Typography, List, ListItem, ListItemText, ListItemSecondaryAction, Button } from '@mui/material';
 
-
-
-export default function PantryItemList() {
+export default function PantryItemList({ items, onEditItem, onRemoveItem }) {
     return (
         <Paper elevation={3} style={{ padding:'16px' }} >
             <Typography variant='h5' gutterBottom>
