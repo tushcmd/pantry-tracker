@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { DM_Sans } from 'next/font/google'
 import { Space_Mono } from 'next/font/google'
+import Navbar from '@/components/layout/Nav';
 
 
 
@@ -36,6 +37,7 @@ export default function Layout({ children }) {
         <body
           className={`antialiased ${fontHeading.variable} ${fontBody.variable}`}
         >
+          <Navbar />
           {children}
         </body>
       </ThemeProvider>
