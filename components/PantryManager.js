@@ -7,7 +7,7 @@ import { AddItemForm } from './pantry/AddItemForm';
 import { ExpiringItemsList } from './pantry/ExpiringItems';
 import { PantryOverview } from './pantry/PantryOverview';
 
-export function PantryManager() {
+export default function PantryManager() {
     const [pantryItems, setPantryItems] = useState([
         {
             id: 1,
@@ -94,7 +94,7 @@ export function PantryManager() {
 
     return (
         <Grid container spacing={3}>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
                 <Paper elevation={3} style={{ padding: '16px', marginBottom: '16px' }}>
                     <PantryOverview
                         totalItems={pantryItems.length}
@@ -103,7 +103,7 @@ export function PantryManager() {
                     />
                 </Paper>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
                 <Paper elevation={3} style={{ padding: '16px', marginBottom: '16px' }}>
                     <AddItemForm
                         newItem={newItem}
@@ -115,7 +115,7 @@ export function PantryManager() {
             </Grid>
             <Grid item xs={12}>
                 <Paper elevation={3}>
-                    <Tabs value={activeTab} onChange={handleTabChange} centered>
+                    <Tabs value={activeTab} onChange={handleTabChange} variant='fullWidth' >
                         <Tab label="Pantry Items" />
                         <Tab label="Expiring Soon" />
                     </Tabs>

@@ -1,4 +1,4 @@
-import ClientPantryManager from '@/components/ClientPantryManager'
+import PantryManager from '@/components/PantryManager'
 import { Box, Container, Typography } from '@mui/material'
 
 export default function Home() {
@@ -8,7 +8,7 @@ export default function Home() {
         <Typography variant="h4" component="h1" gutterBottom>
           My Pantry Manager
         </Typography>
-        <ClientPantryManager />
+        <PantryManager />
       </Box>
     </Container>
   )

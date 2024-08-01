@@ -3,10 +3,10 @@ import { List, ListItem, ListItemText, ListItemSecondaryAction, Button, Paper, T
 
 export function ExpiringItemsList({ items, onMarkConsumed }) {
   return (
-    <Paper elevation={3} style={{ padding: '16px', marginBottom: '16px' }}>
-      <Typography variant="h5" gutterBottom>
+    <div>
+      {/* <Typography variant="h5" gutterBottom>
         Expiring Soon
-      </Typography>
+      </Typography> */}
       <List>
         {items.length > 0 ? (
           items.map((item) => (
@@ -25,6 +25,7 @@ export function ExpiringItemsList({ items, onMarkConsumed }) {
                 </Button>
               </ListItemSecondaryAction>
             </ListItem>
+            
           ))
         ) : (
           <Typography variant="body2" color="textSecondary">
@@ -32,6 +33,6 @@ export function ExpiringItemsList({ items, onMarkConsumed }) {
           </Typography>
         )}
       </List>
-    </Paper>
+    </div>
   );
 }

@@ -3,7 +3,7 @@ import { Grid, Paper, Typography } from '@mui/material';
 
 export function PantryOverview({ totalItems, totalQuantity, expiringItemsCount }) {
   return (
-    <Paper elevation={3} style={{ padding: '16px' }}>
+    <div>
       <Typography variant="h5" gutterBottom>
         Pantry Overview
       </Typography>
@@ -33,6 +33,6 @@ export function PantryOverview({ totalItems, totalQuantity, expiringItemsCount }
           </Typography>
         </Grid>
       </Grid>
-    </Paper>
+    </div>
   );
 }

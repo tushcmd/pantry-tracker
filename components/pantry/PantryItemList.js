@@ -2,10 +2,10 @@ import { Paper, Typography, List, ListItem, ListItemText, ListItemSecondaryActio
 
 export default function PantryItemList({ items, onEditItem, onRemoveItem }) {
     return (
-        <Paper elevation={3} style={{ padding:'16px' }} >
-            <Typography variant='h5' gutterBottom>
+        <div >
+            {/* <Typography variant='h5' gutterBottom>
                 Pantry Items
-            </Typography>
+            </Typography> */}
             <List>
                 {items.map((item) => (
                     <ListItem key={item.id} >
@@ -37,6 +37,6 @@ export default function PantryItemList({ items, onEditItem, onRemoveItem }) {
                 )                
                 )}
             </List>
-        </Paper>
+        </div>
     )
 }
