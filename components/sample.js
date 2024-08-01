@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState } from 'react';
-import { 
-  Grid, Paper, Typography, TextField, Button, 
+import {
+  Grid, Paper, Typography, TextField, Button,
   List, ListItem, ListItemText, ListItemSecondaryAction
 } from '@mui/material';
 
@@ -14,23 +14,67 @@ export function PantryManager() {
       quantity: 3,
       expirationDate: "2024-07-31",
     },
-    // ... other initial items
-  ]);
-
+    {
+      id: 2,
+      name: "Whole Wheat Pasta",
+      quantity: 1,
+      expirationDate: "2024-08-15",
+    },
+    {
+      id: 3,
+      name: "Peanut Butter",
+      quantity: 2,
+      expirationDate: "2024-09-01",
+    },
+    {
+      id: 4,
+      name: "Oats",
+      quantity: 4,
+      expirationDate: "2024-06-30",
+    },
+  ])
   const [newItem, setNewItem] = useState({
     name: "",
     quantity: 1,
     expirationDate: "",
-  });
-
+  })
   const [errors, setErrors] = useState({
     name: "",
     quantity: "",
     expirationDate: "",
-  });
-
-  // ... keep the same handleAddItem, handleEditItem, handleRemoveItem, 
-  // handleMarkConsumed, and expiringItems logic
+  })
+  const handleAddItem = () => {
+    if (newItem.name.trim() === "") {
+      setErrors((prev) => ({ ...prev, name: "Item name is required" }))
+      return
+    }
+    if (newItem.quantity <= 0) {
+      setErrors((prev) => ({ ...prev, quantity: "Quantity must be greater than 0" }))
+      return
+    }
+    if (newItem.expirationDate === "") {
+      setErrors((prev) => ({ ...prev, expirationDate: "Expiration date is required" }))
+      return
+    }
+    setPantryItems((prev) => [...prev, { id: Date.now(), ...newItem }])
+    setNewItem({ name: "", quantity: 1, expirationDate: "" })
+    setErrors({ name: "", quantity: "", expirationDate: "" })
+  }
+  const handleEditItem = (id, updates) => {
+    setPantryItems((prev) => prev.map((item) => (item.id === id ? { ...item, ...updates } : item)))
+  }
+  const handleRemoveItem = (id) => {
+    setPantryItems((prev) => prev.filter((item) => item.id !== id))
+  }
+  const handleMarkConsumed = (id) => {
+    setPantryItems((prev) => prev.filter((item) => item.id !== id))
+  }
+  const expiringItems = pantryItems.filter((item) => {
+    const expirationDate = new Date(item.expirationDate)
+    const today = new Date()
+    const daysUntilExpiration = (expirationDate - today) / (1000 * 60 * 60 * 24)
+    return daysUntilExpiration <= 7
+  })
 
   return (
     <Grid container spacing={3}>
@@ -47,21 +91,21 @@ export function PantryManager() {
                   secondary={`Quantity: ${item.quantity} | Expires: ${item.expirationDate}`}
                 />
                 <ListItemSecondaryAction>
-                  <Button 
-                    variant="outlined" 
-                    size="small" 
-                    // onClick={() => handleEditItem(item.id, {
-                    //   name: "Edited Item",
-                    //   quantity: 5,
-                    //   expirationDate: "2024-12-31",
-                    // })}
+                  <Button
+                    variant="outlined"
+                    size="small"
+                   onClick={() => handleEditItem(item.id, {
+                     name: "Edited Item",
+                     quantity: 5,
+                     expirationDate: "2024-12-31",
+                   })}
                   >
                     Edit
                   </Button>
-                  <Button 
-                    variant="outlined" 
-                    size="small" 
-                    // onClick={() => handleRemoveItem(item.id)}
+                  <Button
+                    variant="outlined"
+                    size="small"
+                  onClick={() => handleRemoveItem(item.id)}
                   >
                     Remove
                   </Button>
@@ -103,10 +147,10 @@ export function PantryManager() {
               />
             </Grid>
             <Grid item xs={12}>
-              <Button 
-                variant="contained" 
-                color="primary" 
-                // onClick={handleAddItem}
+              <Button
+                variant="contained"
+                color="primary"
+              onClick={handleAddItem}
               >
                 Add Item
               </Button>
@@ -128,10 +172,10 @@ export function PantryManager() {
                     secondary={`Quantity: ${item.quantity} | Expires: ${item.expirationDate}`}
                   />
                   <ListItemSecondaryAction>
-                    <Button 
-                      variant="outlined" 
-                      size="small" 
-                    //   onClick={() => handleMarkConsumed(item.id)}
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      onClick={() => handleMarkConsumed(item.id)}
                     >
                       Mark as Consumed
                     </Button>
