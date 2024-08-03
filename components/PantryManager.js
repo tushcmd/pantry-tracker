@@ -44,10 +44,21 @@ export default function PantryManager() {
     //   }
 
 
+    // const handleEditItem = async (id, updates) => {
+    //     await updatePantryItem(id, updates);
+    //     fetchPantryItems()
+    //     fetchExpiringItems()
+    // }
     const handleEditItem = async (id, updates) => {
-        await updatePantryItem(id, updates);
-        fetchPantryItems()
-        fetchExpiringItems()
+        console.log("Editing item with ID:", id, "Updates:", updates);
+        try {
+            await updatePantryItem(id, updates);
+            await fetchPantryItems();
+            await fetchExpiringItems();
+            console.log("Item updated successfully");
+        } catch (error) {
+            console.error("Error updating item:", error);
+        }
     }
 
     const handleRemoveItem = async (id) => {

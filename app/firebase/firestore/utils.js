@@ -23,14 +23,16 @@ export const addPantryItem = async (item) => {
     }
 }
 
+
 export const updatePantryItem = async (id, updates) => {
     try {
         const itemRef = doc(db, COLLECTION_NAME, id);
         await updateDoc(itemRef, updates);
+        console.log("Document successfully updated");
     } catch (error) {
-        console.error('Error updating document: ', error);
+        console.error("Error updating document: ", error);
     }
-}
+};
 
 export const deletePantryItem = async (id) => {
     try {
