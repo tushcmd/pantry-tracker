@@ -15,7 +15,7 @@ export default function PantryManager() {
 
     useEffect(() => {
         fetchPantryItems();
-        fetchExpirirngItems();
+        fetchExpiringItems();
     }, []);
 
     
@@ -24,22 +24,30 @@ export default function PantryManager() {
         setPantryItems(items);
     }
 
-    const fetchExpirirngItems = async () => {
+    const fetchExpiringItems = async () => {
         const items = await getExpiringItems();
         setExpiringItems(items);
     }
 
-    const handleAddItem = async (newItem) => {
-        await addPantryItem(newItem);
-        fetchPantryItems()
-        fetchExpirirngItems()
-    }
+    // const handleAddItem = async (newItem) => {
+    //     await addPantryItem(newItem);
+    //     fetchPantryItems()
+    //     fetchExpiringItems()
+    // }
+
+    // const handleAddItem = async (newItem) => {
+    //     console.log("handleAddItem called with:", newItem);
+    //     await addPantryItem(newItem);
+    //     await fetchPantryItems();
+    //     await fetchExpiringItems();
+    //     console.log("States updated after adding item");
+    //   }
 
 
     const handleEditItem = async (id, updates) => {
         await updatePantryItem(id, updates);
         fetchPantryItems()
-        fetchExpirirngItems()
+        fetchExpiringItems()
     }
 
     const handleRemoveItem = async (id) => {
@@ -71,7 +79,41 @@ export default function PantryManager() {
 
     const handleInputChange = (field, value) => {
         setNewItem(prev => ({ ...prev, [field]: value }));
+        // Clear error for this field when user types
+        setErrors(prev => ({ ...prev, [field]: '' }));
     };
+
+    const validateForm = () => {
+        let newErrors = {};
+        if (!newItem.name.trim()) newErrors.name = 'Name is required';
+        if (!newItem.quantity || newItem.quantity < 1) newErrors.quantity = 'Quantity must be at least 1';
+        if (!newItem.expirationDate) newErrors.expirationDate = 'Expiration date is required';
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    }
+
+    const handleAddItem = async (newItemToAdd) => {
+        console.log("handleAddItem called with:", newItemToAdd);
+        if (validateForm()) {
+            try {
+                await addPantryItem(newItemToAdd);
+                await fetchPantryItems();
+                await fetchExpiringItems();
+                console.log("Item added successfully");
+                // Reset form after successful addition
+                setNewItem({
+                    name: "",
+                    quantity: 1,
+                    expirationDate: "",
+                });
+            } catch (error) {
+                console.error("Error adding item:", error);
+                // Optionally set an error state to display to the user
+            }
+        } else {
+            console.log("Form validation failed");
+        }
+    }
 
 
 

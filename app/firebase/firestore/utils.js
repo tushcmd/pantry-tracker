@@ -1,12 +1,22 @@
 import { db } from '../config';
-import { collection, getDocs } from 'firebase/firestore';
+import { addDoc, updateDoc, deleteDoc, collection, getDocs, query, where, doc } from 'firebase/firestore';
 
 const COLLECTION_NAME = 'pantryItems';
 
 
+// export const addPantryItem = async (item) => {
+//     try {
+//         const docRef = await addDoc(collection(db, COLLECTION_NAME), item);
+//         return docRef.id;
+//     } catch (error) {
+//         console.error('Error adding document: ', error);
+//     }
+// }
 export const addPantryItem = async (item) => {
+    console.log("Attempting to add item:", item);
     try {
         const docRef = await addDoc(collection(db, COLLECTION_NAME), item);
+        console.log("Item added successfully with ID:", docRef.id);
         return docRef.id;
     } catch (error) {
         console.error('Error adding document: ', error);

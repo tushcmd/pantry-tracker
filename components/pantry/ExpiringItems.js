@@ -8,7 +8,7 @@ export function ExpiringItemsList({ items, onMarkConsumed }) {
         Expiring Soon
       </Typography> */}
       <List>
-        {items.length > 0 ? (
+        {items && items.length > 0 ? (
           items.map((item) => (
             <ListItem key={item.id}>
               <ListItemText
