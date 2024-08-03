@@ -1,24 +1,26 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { Grid, Paper, Tabs, Tab, Box } from '@mui/material';
+import { Grid, Paper, Tabs, Tab, Box, Button } from '@mui/material';
 import PantryItemList from './pantry/PantryItemList';
-import { AddItemForm } from './pantry/AddItemForm';
+// import { AddItemForm } from './pantry/AddItemForm';
 import { ExpiringItemsList } from './pantry/ExpiringItems';
 import { PantryOverview } from './pantry/PantryOverview';
 import { addPantryItem, updatePantryItem, deletePantryItem, getPantryItems, getExpiringItems } from '@/app/firebase/firestore/utils';
+import { AddItemDialog } from './pantry/AddItemDialog';
 
 
 export default function PantryManager() {
     const [pantryItems, setPantryItems] = useState([]);
     const [expiringItems, setExpiringItems] = useState([]);
+    const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
     useEffect(() => {
         fetchPantryItems();
         fetchExpiringItems();
     }, []);
 
-    
+
     const fetchPantryItems = async () => {
         const items = await getPantryItems();
         setPantryItems(items);
@@ -133,50 +135,65 @@ export default function PantryManager() {
     };
 
     return (
-        <Grid container spacing={3}>
-            <Grid item xs={6}>
-                <Paper elevation={3} style={{ padding: '16px', marginBottom: '16px' }}>
-                    <PantryOverview
-                        totalItems={pantryItems.length}
-                        totalQuantity={pantryItems.reduce((total, item) => total + item.quantity, 0)}
-                        expiringItemsCount={expiringItems?.length || 0} 
-                    />
-                </Paper>
-            </Grid>
-            <Grid item xs={6}>
-                <Paper elevation={3} style={{ padding: '16px', marginBottom: '16px' }}>
-                    <AddItemForm
+        <>
+            <Grid container spacing={3}>
+                <Grid item xs={6}>
+                    <Paper elevation={3} style={{ padding: '16px', marginBottom: '16px' }}>
+                        <PantryOverview
+                            totalItems={pantryItems.length}
+                            totalQuantity={pantryItems.reduce((total, item) => total + item.quantity, 0)}
+                            expiringItemsCount={expiringItems?.length || 0}
+                        />
+                    </Paper>
+                </Grid>
+                <Grid item xs={6}>
+                    <Paper elevation={3} style={{ padding: '16px', marginBottom: '16px' }}>
+                        {/* <AddItemForm
                         newItem={newItem}
                         errors={errors}
                         onInputChange={handleInputChange}
                         onAddItem={handleAddItem}
-                    />
-                </Paper>
+                    /> */}
+                        <Button variant="contained" color="primary" onClick={() => setIsAddDialogOpen(true)}>
+                            Add New Item
+                        </Button>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper elevation={3}>
+                        <Tabs value={activeTab} onChange={handleTabChange} variant='fullWidth' >
+                            <Tab label="Pantry Items" />
+                            <Tab label="Expiring Soon" />
+                        </Tabs>
+                        <Box p={3}>
+                            {activeTab === 0 && (
+                                <PantryItemList
+                                    items={pantryItems}
+                                    onEditItem={handleEditItem}
+                                    onRemoveItem={handleRemoveItem}
+                                />
+                            )}
+                            {activeTab === 1 && (
+                                <ExpiringItemsList
+                                    items={expiringItems}
+                                    onMarkConsumed={handleMarkConsumed}
+                                />
+                            )}
+                        </Box>
+                    </Paper>
+                </Grid>
             </Grid>
-            <Grid item xs={12}>
-                <Paper elevation={3}>
-                    <Tabs value={activeTab} onChange={handleTabChange} variant='fullWidth' >
-                        <Tab label="Pantry Items" />
-                        <Tab label="Expiring Soon" />
-                    </Tabs>
-                    <Box p={3}>
-                        {activeTab === 0 && (
-                            <PantryItemList
-                                items={pantryItems}
-                                onEditItem={handleEditItem}
-                                onRemoveItem={handleRemoveItem}
-                            />
-                        )}
-                        {activeTab === 1 && (
-                            <ExpiringItemsList
-                                items={expiringItems}
-                                onMarkConsumed={handleMarkConsumed}
-                            />
-                        )}
-                    </Box>
-                </Paper>
-            </Grid>
-        </Grid>
+
+
+            <AddItemDialog
+                open={isAddDialogOpen}
+                onClose={() => setIsAddDialogOpen(false)}
+                newItem={newItem}
+                errors={errors}
+                onInputChange={handleInputChange}
+                onAddItem={handleAddItem}
+            />
+        </>
     );
 }
 
