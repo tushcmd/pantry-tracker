@@ -1,7 +1,7 @@
 import PantryManager from '@/components/PantryManager'
 import { Box, Container, Typography } from '@mui/material'
 
-export default function Home() {
+export default function Page() {
   return (
     <Container>
       <Box sx={{ my: 4 }}>
@@ -14,6 +14,7 @@ export default function Home() {
   )
 }
 
+export const dynamic = 'force-dynamic'
 
 // import { PantryManager } from '@/components/PantryManager';
 // import { Box, Container, Typography } from '@mui/material'

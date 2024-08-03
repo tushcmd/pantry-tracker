@@ -6,7 +6,7 @@ import PantryItemList from './pantry/PantryItemList';
 // import { AddItemForm } from './pantry/AddItemForm';
 import { ExpiringItemsList } from './pantry/ExpiringItems';
 import { PantryOverview } from './pantry/PantryOverview';
-import { addPantryItem, updatePantryItem, deletePantryItem, getPantryItems, getExpiringItems } from '@/app/firebase/firestore/utils';
+import { addPantryItem, updatePantryItem, deletePantryItem, getPantryItems, getExpiringItems } from '@/app/_firebase/firestore/utils';
 import { AddItemDialog } from './pantry/AddItemDialog';
 
 
@@ -76,8 +76,8 @@ export default function PantryManager() {
     };
 
     const [activeTab, setActiveTab] = useState(0);
-    const [drawerOpen, setDrawerOpen] = useState(false);
-    const [addItemDrawerOpen, setAddItemDrawerOpen] = useState(false);
+    // const [drawerOpen, setDrawerOpen] = useState(false);
+    // const [addItemDrawerOpen, setAddItemDrawerOpen] = useState(false);
     const [newItem, setNewItem] = useState({
         name: "",
         quantity: 1,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Paper, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 export function PantryOverview({ totalItems, totalQuantity, expiringItemsCount }) {
   return (

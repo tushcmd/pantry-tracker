@@ -1,5 +1,5 @@
 import "./globals.css";
-import theme from './theme-green.js';
+import theme from './_themes/theme-green.js';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { DM_Sans } from 'next/font/google'
