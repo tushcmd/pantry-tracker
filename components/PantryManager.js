@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { Grid, Paper, Tabs, Tab, Box, Button } from '@mui/material';
+import { Grid, Paper, Tabs, Tab, Box, Button, Stack } from '@mui/material';
 import PantryItemList from './pantry/PantryItemList';
 // import { AddItemForm } from './pantry/AddItemForm';
 import { ExpiringItemsList } from './pantry/ExpiringItems';
@@ -9,11 +9,14 @@ import { PantryOverview } from './pantry/PantryOverview';
 import { addPantryItem, updatePantryItem, deletePantryItem, getPantryItems, getExpiringItems } from '@/app/_firebase/firestore/utils';
 import { AddItemDialog } from './pantry/AddItemDialog';
 
+import { CameraAlt } from '@mui/icons-material';
+
 
 export default function PantryManager() {
     const [pantryItems, setPantryItems] = useState([]);
     const [expiringItems, setExpiringItems] = useState([]);
     const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+    const [isCameraDialogOpen, setIsCameraDialogOpen] = useState();
 
     useEffect(() => {
         fetchPantryItems();
@@ -147,16 +150,32 @@ export default function PantryManager() {
                     </Paper>
                 </Grid>
                 <Grid item xs={6}>
-                    <Paper elevation={3} style={{ padding: '16px', marginBottom: '16px' }}>
+                    <Paper elevation={3} style={{ padding: '16px', marginBottom: '16px' }} spacing={3}>
                         {/* <AddItemForm
                         newItem={newItem}
                         errors={errors}
                         onInputChange={handleInputChange}
                         onAddItem={handleAddItem}
                     /> */}
-                        <Button variant="contained" color="primary" onClick={() => setIsAddDialogOpen(true)}>
-                            Add New Item
-                        </Button>
+                        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                            <Button 
+                                variant="contained" 
+                                color="primary" 
+                                onClick={() => setIsAddDialogOpen(true)}
+                                fullWidth
+                            >
+                                Add New Item
+                            </Button>
+                            <Button 
+                                variant="contained" 
+                                color="secondary" 
+                                onClick={() => setIsCameraDialogOpen(true)}
+                                startIcon={<CameraAlt />}
+                                fullWidth
+                            >
+                                Add with Camera
+                            </Button>
+                        </Stack>
                     </Paper>
                 </Grid>
                 <Grid item xs={12}>
@@ -192,6 +211,16 @@ export default function PantryManager() {
                 errors={errors}
                 onInputChange={handleInputChange}
                 onAddItem={handleAddItem}
+            />
+
+            <AddItemDialog
+                open={isCameraDialogOpen}
+                onClose={() => setIsCameraDialogOpen(false)}
+                newItem={newItem}
+                errors={errors}
+                onInputChange={handleInputChange}
+                onAddItem={handleAddItem}
+                useCamera={true}
             />
         </>
     );
