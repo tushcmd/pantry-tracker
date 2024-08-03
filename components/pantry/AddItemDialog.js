@@ -23,10 +23,25 @@ export function AddItemDialog({ open, onClose, newItem, errors, onInputChange, o
     onClose();
   };
 
+  // const handleCapture = () => {
+  //   const imageSrc = cameraRef.current.takePhoto();
+  //   setCapturedImage(imageSrc);
+  //   setIsCameraOpen(false);
+  // };
   const handleCapture = () => {
-    const imageSrc = cameraRef.current.takePhoto();
-    setCapturedImage(imageSrc);
-    setIsCameraOpen(false);
+    if (cameraRef.current && typeof cameraRef.current.takePhoto === 'function') {
+      try {
+        const imageSrc = cameraRef.current.takePhoto();
+        setCapturedImage(imageSrc);
+        setIsCameraOpen(false);
+      } catch (error) {
+        console.error('Failed to take photo:', error);
+        // Handle the error, showing a message to the user
+      }
+    } else {
+      console.error('Camera is not ready or takePhoto method is not available');
+      // Handle this case,showing a message to the user
+    }
   };
 
   const handleImageUploadAndAnalysis = async (imageSrc) => {
