@@ -23,6 +23,7 @@ export default function PantryItemList({ items, onEditItem, onRemoveItem }) {
     return (
         <div>
             <List>
+            {/* sx={{ overflowX: 'scroll' }} */}
                 {items.map((item) => (
                     <ListItem key={item.id}>
                         <ListItemText 
